@@ -13,12 +13,12 @@ def main_function(json_filename,output_destination):
     import logging
 
     # Functions
-    from CODE.functions import f_whale
-    from CODE.functions import f_ship
-    from CODE.functions import f_detection
-    from CODE.functions import f_plots
-    from CODE.functions import f_dive_profile
-    from CODE.functions import f_info_for_dp
+    from CODE.functions import f_whale as f_whale
+    from CODE.functions import f_ship as f_ship
+    from CODE.functions import f_detection as f_detection
+    from CODE.functions import f_plots as f_plots
+#    from CODE.functions import f_dive_profile
+    from CODE.functions import f_info_for_dp as f_info_for_dp
     #from CODE.functions import f_triage_repertoire_dp
 
     def st_to_array(string):

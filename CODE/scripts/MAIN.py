@@ -6,11 +6,21 @@ from multiprocessing import Pool
 os.environ['QT_QPA_PLATFORM']='offscreen'
 import pandas as pd
 
+import sys
+sys.path.append('../..')
 #Functions
 from CODE.functions import f_main
 from CODE.functions import f_csv_to_json
 
-prefix='/home/loicka/Desktop/ws_whorld/organized_whorld'  #todo modify here
+from CODE.functions import f_whale
+from CODE.functions import f_ship
+from CODE.functions import f_detection
+from CODE.functions import f_plots
+from CODE.functions import f_dive_profile
+from CODE.functions import f_info_for_dp
+
+#prefix='/home/loicka/Desktop/ws_whorld/organized_whorld'  #todo modify here
+prefix='/home/lu/whales/new_sensor/WHorld_public'  #todo modify here
 
 #Change current working directory
 os.chdir(prefix)

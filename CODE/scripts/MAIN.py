@@ -6,11 +6,14 @@ from multiprocessing import Pool
 os.environ['QT_QPA_PLATFORM']='offscreen'
 import pandas as pd
 
+import sys
+sys.path.append('../..')
+
 #Functions
 from CODE.functions import f_main
 from CODE.functions import f_csv_to_json
 
-prefix='/home/loicka/Desktop/ws_whorld/organized_whorld'  #todo modify here
+prefix='/home/ausmosuser/WHorld_public'  #todo modify here
 
 #Change current working directory
 os.chdir(prefix)
@@ -27,7 +30,7 @@ for f in files:
     os.remove(f)
 
 # RUN FUNCTION TO CREATE JSON CASE FILES
-csvFilePath=prefix+'/CODE/scenario_runs/cases_short.csv' #todo change here
+csvFilePath=prefix+'/CODE/scenario_runs/single.csv' #todo change here
 jsonFilePath=prefix+'/CODE/scenario_runs/CASES_RUN/'
 f_csv_to_json.make_json(csvFilePath, jsonFilePath)
 

@@ -41,7 +41,8 @@ def main_function(json_filename,output_destination):
     if angle_detection == 0:
         sys.exit("Angle of detectable_whales_xyz must be >0 degree")
     DDF=int(data['data detection function'])
-    ship_reaction_time = np.asarray([int(data['ship reaction time #1 (s)']),int(data['ship reaction time #2 (s)']),int(data['ship reaction time #3 (s)'])])  # array
+#    ship_reaction_time = np.asarray([int(data['ship reaction time #1 (s)']),int(data['ship reaction time #2 (s)']),int(data['ship reaction time #3 (s)'])])  # array
+    ship_reaction_time = np.asarray([int(data['ship reaction time #1 (s)'])])  # array
     whale_nb = int(data["whale number"]) # int
     interval_blow = int(data["Interval btw blows (s)"])
     all_whales_blow = int(data["All whales blow"])
@@ -131,6 +132,7 @@ def main_function(json_filename,output_destination):
                         ship_h) + 'speed:' + str(speed1)
 
                     encounter_result=[]
+                    print(name)
 
                     # Detection function
                     for s in range(ship_nb):
@@ -154,6 +156,9 @@ def main_function(json_filename,output_destination):
                         prob_detection_calc = np.sum(encounter_result)/len(encounter_result)#sum/len
                     prob_detection.setdefault(name_prob, []).append(prob_detection_calc) #dictionary of lists
 
+                    #print(name_prob)
+                    print(prob_detection_calc)
+
                     #ETA
                     time_current= t.tocvalue()
                     past=past+time_current
@@ -174,19 +179,29 @@ def main_function(json_filename,output_destination):
         "Probs std of detection": prob_std_epoch,
         "Probs detection": prob_detection,
         }
+        #print(content)
         pickle.dump(content, open(output_destination + '/epochs_folder/'+'epoch' +str(num_iter)+'_'+ run_name + '.pickle', "wb"))
+
+        if plt_world == True:
+            f_plots.whorld_plt(ship_nb, ship_x, ship_y, beta_ship, angle_detection, time_run, startAngle, endAngle,
+                        radius_detect, whale_nb,whale_x, whale_y, ship_reaction_time, width, l, epoch, ship_height,
+                        indanger_whales_xyz, detected_whales_xyz, run_name, ship_speeds,output_destination, num_iter)
 
     prob_average_final,prob_std_final= f_detection.get_final_prob_std(ship_reaction_time,ship_height,prob_detection)
 
 
+    print("average")
+    print(prob_average_final)
+    print("std")
+    print(prob_std_final)
     # PLOTTING
-    if plt_probs == True:
-        f_plots.probability_plt(ship_height,ship_speeds,prob_average_final,prob_std_final,ship_reaction_time,run_name,epoch,output_destination)
+#    if plt_probs == True:
+#        f_plots.probability_plt(ship_height,ship_speeds,prob_average_final,prob_std_final,ship_reaction_time,run_name,epoch,output_destination)
 
-    if plt_world == True:
-        f_plots.whorld_plt(ship_nb, ship_x, ship_y, beta_ship, angle_detection, time_run, startAngle, endAngle,
-                       radius_detect, whale_nb,whale_x, whale_y, ship_reaction_time, width, l, epoch, ship_height,
-                       indanger_whales_xyz, detected_whales_xyz, run_name, ship_speeds,output_destination)
+#    if plt_world == True:
+#        f_plots.whorld_plt(ship_nb, ship_x, ship_y, beta_ship, angle_detection, time_run, startAngle, endAngle,
+#                       radius_detect, whale_nb,whale_x, whale_y, ship_reaction_time, width, l, epoch, ship_height,
+#                       indanger_whales_xyz, detected_whales_xyz, run_name, ship_speeds,output_destination)
 
     time_stamp=datetime.datetime.fromtimestamp(ts).strftime('%H:%M:%S %d/%m/%Y')
     #print('About to store... at '+time_stamp)

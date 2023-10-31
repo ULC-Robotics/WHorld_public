@@ -1,6 +1,6 @@
 
 def whorld_plt(ship_nb,ship_x,ship_y,beta_ship,angle_detection,time_run,startAngle,endAngle,radius_detect,whale_nb,
-               whale_x,whale_y,ship_reaction_time,width,l,epoch,ship_height,indanger_whales_xyz,detected_whales_xyz,run_name,ship_speeds,output_destination):
+               whale_x,whale_y,ship_reaction_time,width,l,epoch,ship_height,indanger_whales_xyz,detected_whales_xyz,run_name,ship_speeds,output_destination,iter):
     import matplotlib.pyplot as plt
     import numpy as np
 
@@ -86,7 +86,7 @@ def whorld_plt(ship_nb,ship_x,ship_y,beta_ship,angle_detection,time_run,startAng
     plt.tight_layout()
     plt.grid()
     #plt.show()
-    fig1.savefig(output_destination+'/'+ run_name + '_world' + '.png', bbox_inches='tight')
+    fig1.savefig(output_destination+'/'+ run_name + '_world' + str(iter) + '.png', bbox_inches='tight')
 
 
 def probability_plt(ship_height,ship_speeds,prob_average_final,prob_std_final,ship_reaction_time,run_name,epoch,output_destination):

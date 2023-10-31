@@ -45,7 +45,8 @@ def whale_dict(time_run, w, l, width, mode, all_whales_blow, all_whales_surf, al
 
         # Random initial x,y positions
         wx[0,0]=random.randrange(width)
-        wy[0,0]=random.randrange((15*120),l) #whales are positioned outside of max exclusion zone: max speed * max reaction time
+        wy[0,0]=random.randrange(3*500, 500*5) #whales are positioned outside of 3 times detection distance
+        #wy[0,0]=random.randrange((15*120),l) #whales are positioned outside of max exclusion zone: max speed * max reaction time
 
         beta_whale_offset=random.randint(0, 360)
         for i in range(1, time_run):

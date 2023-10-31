@@ -14,7 +14,7 @@ def ship_dict(time_run, ship_nb, l,w, beta_ship, speed):
     ship_x = {}
     ship_y = {}
     for s in range(0, ship_nb):
-        x = random.randrange(w)  # x0 position
+        x = w/2 #random.randrange(w)  # x0 position
         y = 0#random.randrange(0,int(l/100))  # y0 position
         x_end = (x + speed * np.cos(np.deg2rad(beta_ship)) * time_run) #end X position after time_run seconds
         y_end = (y + speed * np.sin(np.deg2rad(beta_ship)) * time_run) #end Y position after time_run seconds

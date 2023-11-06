@@ -21,6 +21,9 @@ def main_function(json_filename,output_destination):
     from CODE.functions import f_info_for_dp
     #from CODE.functions import f_triage_repertoire_dp
 
+    write_path_to_file = False
+    read_path_from_file = False
+    
     def st_to_array(string):
         li = list(string.split(","))
         li= [int(x) for x in li]
@@ -35,7 +38,8 @@ def main_function(json_filename,output_destination):
     ship_height = st_to_array(data['ship height (m)']) # array
     ship_nb = int(data['ship number'])  # int
     ship_speeds = st_to_array(data['ship speeds (m/s)']) # np.array((#,))
-    l=time_run*ship_speeds[-1]+(time_run*ship_speeds[-1]/10) #length of grid is proportional to max ship speed
+#    l=time_run*ship_speeds[-1]+(time_run*ship_speeds[-1]/10) #length of grid is proportional to max ship speed
+    l=time_run*ship_speeds[0] #length of grid is proportional to max ship speed
     beta_ship = int(data['ship heading (deg)'])  # int
     angle_detection = int(data["angle of detection (deg)"])  # int
     if angle_detection == 0:
@@ -106,6 +110,7 @@ def main_function(json_filename,output_destination):
     prob_std_final={}
 
     for num_iter in range(epoch):
+        print('round ', num_iter)
         for r_time in ship_reaction_time:
             for ship_h in ship_height:  # for all ship heights
 
@@ -131,8 +136,22 @@ def main_function(json_filename,output_destination):
                     name = 'epoch:' + str(num_iter) + 'reaction_time:' + str(r_time) + 'ship_height:' + str(
                         ship_h) + 'speed:' + str(speed1)
 
+                    if write_path_to_file:
+                        to_file = np.append(whale_x[0], whale_y[0], axis=1)
+                        to_file = np.append(to_file, whale_z[0], axis=1)
+                        to_file = np.append(to_file, ship_x[0], axis=1)
+                        to_file = np.append(to_file, ship_y[0], axis=1)
+                        np.savetxt("trace_"+str(num_iter)+".csv", to_file, delimiter=",")
+                    
+                    if read_path_from_file:
+                        array_from_file = np.genfromtxt("trace_"+str(num_iter)+".csv", delimiter=",")
+                        whale_x[0] = array_from_file[:, 0]
+                        whale_y[0] = array_from_file[:, 1]
+                        whale_z[0] = array_from_file[:, 2]
+                        ship_x[0] = array_from_file[:, 3]
+                        ship_y[0] = array_from_file[:, 4]
+                    
                     encounter_result=[]
-                    print(name)
 
                     # Detection function
                     for s in range(ship_nb):
@@ -145,9 +164,13 @@ def main_function(json_filename,output_destination):
                             if len(detected_whale)!=0:
                                 detected_whales_xyz.setdefault(name, []).append(detected_whale)
                                 detected_ships_xy.setdefault(name, []).append(detected_ship)
+                                print('detected whale ', detected_whale)
+                                print('detected ship ', detected_ship)
                             if len(indanger_whale)!=0:
                                 indanger_whales_xyz.setdefault(name, []).append(indanger_whale)
                                 indanger_ships_xy.setdefault(name, []).append(indanger_ship)
+                                print('indanger whale ', indanger_whale)
+                                print('indanger ship ', indanger_ship)
 
                     name_prob = 'reaction_time:' + str(r_time) + 'ship_height:' + str(ship_h)+ 'speed:' + str(speed1)
                     if len(encounter_result)==0:
@@ -155,9 +178,6 @@ def main_function(json_filename,output_destination):
                     else:
                         prob_detection_calc = np.sum(encounter_result)/len(encounter_result)#sum/len
                     prob_detection.setdefault(name_prob, []).append(prob_detection_calc) #dictionary of lists
-
-                    #print(name_prob)
-                    print(prob_detection_calc)
 
                     #ETA
                     time_current= t.tocvalue()
@@ -190,6 +210,20 @@ def main_function(json_filename,output_destination):
     prob_average_final,prob_std_final= f_detection.get_final_prob_std(ship_reaction_time,ship_height,prob_detection)
 
 
+    hit = 0
+    detect = 0
+    for k, v in prob_detection.items():
+        for value in v:
+            if value == 1:
+                hit += 1
+                detect += 1
+            if value == 0:
+                hit += 1
+
+    print("hit")
+    print(hit)
+    print("detect")
+    print(detect)
     print("average")
     print(prob_average_final)
     print("std")

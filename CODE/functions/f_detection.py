@@ -22,7 +22,8 @@ def detection_function(whale_x, whale_y, whale_z, ship_x, ship_y, possibleAngles
     angle_w_s = np.round(((np.arctan2(delta_y, delta_x)) * 180 / np.pi) % 360, 1)
 
     in_ex=np.where(np.logical_and(np.greater_equal(exclusion_distance,dist_w_s),np.greater_equal(dist_w_s,0)))[0] # >=exclusion_zone=>dist_w_s>0
-    vuln_sector=np.where(np.logical_and(np.not_equal(whale_z,3),np.in1d(angle_w_s,possibleAngles)))[0] #state 012+in sector angles
+    vuln_sector=np.where(np.logical_and(np.not_equal(whale_z,3),np.isin(angle_w_s,possibleAngles)))[0] #state 012+in sector angles
+#    vuln_sector=np.where(np.logical_and(np.not_equal(whale_z,3),np.in1d(angle_w_s,possibleAngles)))[0] #state 012+in sector angles
     in_ex_vuln=np.intersect1d(in_ex, vuln_sector) # exclusion zone angles + state 012
 
     if len(in_ex_vuln)!=0:
@@ -38,7 +39,8 @@ def detection_function(whale_x, whale_y, whale_z, ship_x, ship_y, possibleAngles
             index_detected=np.where(detected_log==1)[0]
             in_dz=out_ex[index_detected]
 
-        blowing_sector=np.where(np.logical_and(np.equal(whale_z,0),np.in1d(angle_w_s,possibleAngles)))[0] #blowing+in sector angles
+        blowing_sector=np.where(np.logical_and(np.equal(whale_z,0),np.isin(angle_w_s,possibleAngles)))[0] #blowing+in sector angles
+#        blowing_sector=np.where(np.logical_and(np.equal(whale_z,0),np.in1d(angle_w_s,possibleAngles)))[0] #blowing+in sector angles
         in_dz_blowing = np.intersect1d(in_dz, blowing_sector) #blowing in dz
 
         if len(in_dz_blowing)!=0:

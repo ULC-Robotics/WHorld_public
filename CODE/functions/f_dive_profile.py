@@ -20,7 +20,8 @@ def create_dive_profile(vec_1,vec_2,vec_3,two_one,two_three,interval_blow):
     # 3: deep
 
     dive_profile = np.array([])
-    l = random.choice([1, 2, 3])  # Random start state
+#    l = random.choice([1, 2, 3])  # Random start state
+    l = 2
     flag=0
     for i in range(300):  # change here if need longer dp
         if l == 1:  # surface

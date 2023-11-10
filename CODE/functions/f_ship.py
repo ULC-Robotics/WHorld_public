@@ -31,8 +31,10 @@ def ship_dict(time_run, ship_nb, l,w, beta_ship, speed):
             ship_y[s]= np.concatenate((np.linspace(y,l,num=t_l,endpoint=True),y_endNaN[:,]),axis=0).reshape((time_run,1))
             ship_x[s] = np.concatenate((np.linspace(x, x_endtrue, num=t_l, endpoint=True),x_endNaN[:,]),axis=0).reshape((time_run,1))
         else:
-            ship_x[s] = np.linspace(x, x_end, num=time_run, endpoint=True).reshape(time_run, 1)
-            ship_y[s] = np.linspace(y, y_end, num=time_run, endpoint=True).reshape(time_run, 1)
+            ship_x[s] = np.linspace(x, x_end, num=time_run, endpoint=False).reshape(time_run, 1)
+            ship_y[s] = np.linspace(y, y_end, num=time_run, endpoint=False).reshape(time_run, 1)
+#            ship_x[s] = np.linspace(x, x_end, num=time_run, endpoint=True).reshape(time_run, 1)
+#            ship_y[s] = np.linspace(y, y_end, num=time_run, endpoint=True).reshape(time_run, 1)
 
     return ship_x, ship_y
 

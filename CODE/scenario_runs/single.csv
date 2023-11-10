@@ -1,2 +1,2 @@
 Case Description,Case #,epoch number,run time (s),grid width (m),ship height (m),ship number,ship speeds (m/s),ship heading (deg),angle of detection (deg),data detection function,ship reaction time #1 (s),ship reaction time #2 (s),ship reaction time #3 (s),whale number,mean whale velocity (m/s),std whale velocity (m/s),Interval btw blows (s),All whales blow,All whales surface,All whales subsurface,All whales deep,dive profile mode,plot probabilities,plot world,ETA display,Keep?
-single_par_run,case1,1000,500,250,500,1,5,90,60,0,30,0,0,1,1,0.2,30,0,0,0,0,mixed,0,0,0,K
+single_par_run,case1,100000,500,250,500,1,5,90,60,1,60,0,0,1,1,0.2,30,0,0,0,0,mixed,0,0,0,K

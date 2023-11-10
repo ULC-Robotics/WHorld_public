@@ -52,7 +52,8 @@ def whale_dict(time_run, w, l, width, mode, all_whales_blow, all_whales_surf, al
         for i in range(1, time_run):
             velocity=random.normalvariate(mean_v, std_v)
             # corrolated random walk w/ random component of +/- 5 for each time step
-            beta_whale=beta_whale_offset+random.randrange(-5, 5, 1)
+            change = random.randrange(-5, 6, 1)
+            beta_whale=beta_whale_offset + change
             #beta_whale=beta_whale_offset
             beta_whale_offset=beta_whale
             wx[i,0]=wx[i-1,0]+velocity*np.cos(np.deg2rad(beta_whale))
